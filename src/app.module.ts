@@ -6,6 +6,9 @@ import { ExerciseModule } from './exercise/exercise.module';
 import { PrismaModule } from './shared/db/prisma.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { StatisticsModule } from './statistics/statistics.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { env } from './shared/env';
 
 @Module({
   imports: [
@@ -14,6 +17,8 @@ import { AuthGuard } from './auth/guards/auth.guard';
     AuthModule,
     ExerciseModule,
     WorkoutModule,
+    StatisticsModule,
+    MongooseModule.forRoot(env.db.mongo, { dbName: 'focvs' }),
   ],
   controllers: [],
   providers: [

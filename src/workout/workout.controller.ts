@@ -3,6 +3,7 @@ import { WorkoutService } from './workout.service';
 import { Public } from 'src/auth/guards/decorators/public.decorator';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkouDto } from './dto/update-workout.dto';
+import { PerformedWorkoutDto } from './dto';
 
 @Controller('workout')
 export class WorkoutController {
@@ -14,6 +15,15 @@ export class WorkoutController {
     const workout = await this.service.createWorkout(workoutDto);
 
     return workout;
+  }
+
+  @Post('new/performed')
+  @Public()
+  async savePerformedWorkout(@Body() performedWorkoutDto: PerformedWorkoutDto) {
+    const performedWorkout =
+      await this.service.savePerformed(performedWorkoutDto);
+
+    return performedWorkout;
   }
 
   @Get(':id')

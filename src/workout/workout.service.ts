@@ -1,16 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { WorkoutRepository } from './workout.repository';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
-import { PrismaWorkoutDTO } from './dto';
+import { PerformedWorkoutDto, PrismaWorkoutDTO } from './dto';
+import { MongoWorkoutRepository } from './workout.mongo.repository';
 
 @Injectable()
 export class WorkoutService {
-  constructor(private readonly repo: WorkoutRepository) {}
+  constructor(
+    private readonly repo: WorkoutRepository,
+    private readonly mongoRepo: MongoWorkoutRepository,
+  ) {}
 
   async createWorkout(workoutDto: CreateWorkoutDto) {
     const workout = await this.repo.saveWorkout(workoutDto);
 
     return workout;
+  }
+
+  async savePerformed(performedWorkoutDto: PerformedWorkoutDto) {
+    const performedWorkout =
+      await this.mongoRepo.savePerformed(performedWorkoutDto);
+
+    return performedWorkout;
   }
 
   async updateWorkout(updateWorkoutDto) {

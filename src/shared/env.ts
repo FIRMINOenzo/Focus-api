@@ -13,6 +13,9 @@ const getEnv = () => ({
     secret: process.env.JWT_SECRET,
     expiresIn: parseInt(process.env.JWT_EXPIRES_IN ?? '1800'),
   },
+  db: {
+    mongo: process.env.MONGO_URL,
+  },
 
   isProduction(): boolean {
     return (
